@@ -1,1 +1,10 @@
-This file was created by JetBrains RubyMine 5.4.2 for binding GitHub repository
+= Gratt
+
+Application command line pour T411 qui communique avec transmission-remote installé sur un serveur distant.
+
+== Usage
+
+gratt search TITRE ou gratt search 'LE TITRE'
+gratt top period category  ==> gratt top week film
+gratt details ID
+gratt download ID
