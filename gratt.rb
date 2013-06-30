@@ -9,7 +9,7 @@ class Gratt < Thor
 $server = 'Server IP'
 username = 'Your login'
 password = 'Your Pwd'
-$t411_api = 'http://www.t411.me/public/index.php?_url='
+$t411_api = 'https://api.t411.me'
 login = RestClient.post "#{$t411_api}/auth", { 'username' => "#{username}", 'password' => "#{password}" }, :content_type => :json, :accept => :json
 $auth = JSON.parse(login)
 
