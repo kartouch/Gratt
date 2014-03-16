@@ -11,8 +11,7 @@ T411.authenticate('username','password')
 
 desc 'top', 'Periods today,month,top100'
 def top(period)
-  result = JSON.parse(T411::Torrents.send(period.to_sym))
-  result.each do |item|
+    JSON.parse(T411::Torrents.send(period.to_sym)).each do |item|
     puts item['id'] + ' ' + item['name'] + ' ' + item['category']
   end
 end
@@ -42,8 +41,7 @@ end
 desc 'details ID', 'details of an ID'
 def details(id)
   begin
-    details = JSON.parse(T411::Torrents.details(id))
-    puts Sanitize.clean(details['description']).yellow_on_black
+    puts Sanitize.clean(JSON.parse(T411::Torrents.details(id))['description']).yellow_on_black
   rescue
     puts 'ID Not found'
   end
