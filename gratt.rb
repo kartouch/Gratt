@@ -31,8 +31,7 @@ desc 'download ID', 'download a specific ID'
 def download(id)
   begin
   T411::Torrents.download(id)
-  system("transmission-remote #{$server} -a #{id}.torrent")
-  system("rm #{id}.torrent ")
+  system("transmission-remote #{$server} -a #{id}.torrent && rm #{id}.torrent")
   rescue
    puts 'ID not found !!'
   end
