@@ -11,17 +11,13 @@ T411.authenticate('username','password')
 
 desc 'top', 'Periods today,month,top100'
 def top(period)
-    JSON.parse(T411::Torrents.send(period.to_sym)).each do |item|
-    puts item['id'] + ' ' + item['name'] + ' ' + item['category']
-  end
+    JSON.parse(T411::Torrents.send(period.to_sym)).each { |item| puts item['id'] + ' ' + item['name'] + ' ' + item['category']}
 end
 
 desc 'search TITLE LIMIT','search on title and limit the amount of result'
 def search(title,limit = 100)
   begin
-    JSON.parse(T411::Torrents.search(title,limit))['torrents'].each do |x|
-    puts " #{x['id']}  #{x['name']} #{(x['size'].to_i/1000000)} Mb"
-  end
+    JSON.parse(T411::Torrents.search(title,limit))['torrents'].each { |x|puts " #{x['id']}  #{x['name']} #{(x['size'].to_i/1000000)} Mb"}
   rescue
     puts 'No results found !!'
   end
