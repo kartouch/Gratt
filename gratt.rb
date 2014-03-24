@@ -9,15 +9,24 @@ class Gratt < Thor
 $server = 'Server IP'
 T411.authenticate('username','password')
 
-desc 'top', 'Periods today,month,top100'
-def top(period)
-    JSON.parse(T411::Torrents.send(period.to_sym)).each { |item| puts item['id'] + ' ' + item['name'] + ' ' + item['category']}
+desc 'top category', 'Periods today,month,top100'
+def top(period,cid = nil)
+    JSON.parse(T411::Torrents.send(period.to_sym)).each do |item|
+      case cid
+        when 'documentaire' then puts "#{item['id']} #{item['name']}  #{item['size'].to_i/1000000} Mb" if item['category'].to_i == 634
+        when 'film' then puts "#{item['id']} #{item['name']} #{item['size'].to_i/1000000} Mb" if item['category'].to_i == 631
+        when 'serie' then puts "#{item['id']} #{item['name']} #{item['size'].to_i/1000000} Mb" if item['category'].to_i == 433
+        when 'audiobook' then puts "#{item['id']} #{item['name']} #{item['size'].to_i/1000000} Mb" if item['category'].to_i == 405
+        when 'animimation' then puts "#{item['id']} #{item['name']} #{item['size'].to_i/1000000} Mb" if item['category'].to_i == 433
+       when nil then puts "#{item['id']} #{item['name']} #{item['size'].to_i/1000000} Mb"
+      end
+    end
 end
 
-desc 'search TITLE LIMIT','search on title and limit the amount of result'
-def search(title,limit = 100)
+desc 'search TITLE LIMIT CID','search on title and limit the amount of result'
+def search(title,limit = 100, cid=nil)
   begin
-    JSON.parse(T411::Torrents.search(title,limit))['torrents'].each { |x|puts " #{x['id']}  #{x['name']} #{(x['size'].to_i/1000000)} Mb"}
+    JSON.parse(T411::Torrents.search(title,limit: limit, cid: cid))['torrents'].each { |x|puts " #{x['id']}  #{x['name']} #{(x['size'].to_i/1000000)} Mb"}
   rescue
     puts 'No results found !!'
   end
