@@ -38,6 +38,6 @@ module Gratt2request
   end
 
   def push_to_data(data,t)
-    data << {id: t['id'], name: t['name'].to_s[0..150], size: "#{t['size'].to_i / 1000000} MB", cat: t['category'], added: t['added'].to_s.split(' ')[0], seeders: t['seeders'] }
+    data << {id: t['id'], name: t['name'].to_s[0..100], size: "#{t['size'].to_i / 1000000} MB", cat: t['category'], added: t['added'].to_s.split(' ')[0], seeders: t['seeders'] }
   end
 end
