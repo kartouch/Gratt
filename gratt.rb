@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'thor'
 require 't411'
 require 'parseconfig'
