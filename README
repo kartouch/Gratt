@@ -11,3 +11,8 @@ Commands:
   gratt.rb help [COMMAND]  # Describe available commands or one specific command
   gratt.rb search TITLE    # search on title and limit the amount of result
   gratt.rb top LIST        # Predefined lists based on popularity and period
+
+== Docker
+
+  docker pull kartouch/gratt
+  https://registry.hub.docker.com/u/kartouch/gratt/
