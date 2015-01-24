@@ -1,10 +1,13 @@
 = Gratt
 
-Application command line pour T411 qui communique avec transmission-remote installé sur un serveur distant.
+Command Line App for T411.me
 
 == Usage
 
-gratt search TITRE ou gratt search 'LE TITRE'
-gratt top period category  ==> gratt top week film
-gratt details ID
-gratt download ID
+Commands:
+  gratt.rb details ID      # details of an ID
+  gratt.rb download ID     # download a specific ID
+  gratt.rb generate        # Generate the config file
+  gratt.rb help [COMMAND]  # Describe available commands or one specific command
+  gratt.rb search TITLE    # search on title and limit the amount of result
+  gratt.rb top LIST        # Predefined lists based on popularity and period
