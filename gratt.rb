@@ -2,9 +2,9 @@
 require 'thor'
 require 't411'
 require 'parseconfig'
-require '/usr/share/gratt/auth'
-require '/usr/share/gratt/request'
-require '/usr/share/gratt/config'
+require 'auth'
+require 'request'
+require 'config'
 require 'formatador'
 require 'sanitize'
 
