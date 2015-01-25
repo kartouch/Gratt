@@ -9,8 +9,8 @@ RUN gem install bundler && bundle install
 RUN mkdir /root/.gratt
 RUN chmod +x /usr/share/gratt/gratt.rb
 RUN ln -s /usr/share/gratt/gratt.rb /usr/bin/gratt
-RUN sed -i s/require\ \'auth\'/require\ \'\\/usr\\/share\\/gratt\\/auth\'/g 
-RUN sed -i s/require\ \'auth\'/require\ \'\\/usr\\/share\\/gratt\\/config\'/g 
-RUN  sed -i s/require\ \'auth\'/require\ \'\\/usr\\/share\\/gratt\\/request\'/g 
+RUN sed -i s/require\ \'auth\'/require\ \'\\/usr\\/share\\/gratt\\/auth\'/g /usr/share/gratt/gratt.rb 
+RUN sed -i s/require\ \'auth\'/require\ \'\\/usr\\/share\\/gratt\\/config\'/g /usr/share/gratt/gratt.rb
+RUN  sed -i s/require\ \'auth\'/require\ \'\\/usr\\/share\\/gratt\\/request\'/g /usr/share/gratt/gratt.rb
 
 CMD ["gratt"]
