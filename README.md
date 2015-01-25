@@ -5,12 +5,13 @@ Command Line App for T411.me
 ## Usage
 
 ### Commands:
-&nbsp;&nbsp;&nbsp;gratt.rb details ID      # details of an ID <br>
-&nbsp;&nbsp;&nbsp;gratt.rb download ID     # download a specific ID<br>
-&nbsp;&nbsp;&nbsp;gratt.rb generate        # Generate the config file<br>
-&nbsp;&nbsp;&nbsp;gratt.rb help [COMMAND]  # Describe available commands or one specific command<br>
-&nbsp;&nbsp;&nbsp;gratt.rb search TITLE    # search on title and limit the amount of result<br>
-&nbsp;&nbsp;&nbsp;gratt.rb top LIST        # Predefined lists based on popularity and period<br>
+
+- gratt.rb details ID      # details of an ID
+- gratt.rb download ID     # download a specific ID
+- gratt.rb generate        # Generate the config file
+- gratt.rb help [COMMAND]  # Describe available commands or one specific command
+- gratt.rb search TITLE    # search on title and limit the amount of result
+- gratt.rb top LIST        # Predefined lists based on popularity and period
 
 
 ## Docker
