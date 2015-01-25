@@ -2,9 +2,9 @@
 require 'thor'
 require 't411'
 require 'parseconfig'
-require 'auth'
-require 'request'
-require 'config'
+require './lib/auth'
+require './lib/request'
+require './lib/config'
 require 'formatador'
 require 'sanitize'
 
