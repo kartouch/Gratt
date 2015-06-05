@@ -26,6 +26,8 @@ search_limit=100
 #Path for .torrent file download
 local_path='/tmp'
 
+#subs_lang=french
+subs_path='/tmp'
 #remote server
 #remote_server=")
       Formatador.display_line("[green]Config file created in #{ENV['HOME']+'/.gratt/gratt.conf'}[/]")
