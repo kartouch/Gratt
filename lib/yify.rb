@@ -9,7 +9,7 @@ class Gyify < Thor
   def search(title)
     data = []
     Yts.movie_list("query_term=#{title}").each do |x|
-      subs = 'Y' if Yts.find_subtitles(x['imdb_code'],'french').size != 0
+      subs = 'Y' if Yts.find_subtitles(x['imdb_code'],'french').size != 0 rescue []
       data << { id: x['id'], name: x['title_long'], added: x['date_uploaded'], subs: subs }
     end
     Formatador.display_table( data,[:id,:name,:added, :subs])
