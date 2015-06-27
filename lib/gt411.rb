@@ -66,6 +66,7 @@ class Gt411 < Thor
     rescue
       puts 'ID not found !!'
     end
+   add_to_remote_server(id)
   end
 
   desc 'details ID', 'details of an ID'
@@ -81,4 +82,17 @@ class Gt411 < Thor
   def generate
     Gratt2config::generate_config
   end
+  
+  private 
+  def add_to_remote_server(id)
+    if File.exists?("/tmp/#{id}.torrent")
+      `transmission-remote #{Gratt2config::from_file['transmission_server']} \
+       --auth #{Gratt2config::from_file['transmission_user']}:#{Gratt2config::from_file['transmission_pwd']}\
+       -a /tmp/#{id}.torrent`
+    else
+      puts 'File not found'
+    end
+  end
+
+
 end
