@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/home/kartouch/.rvm/rubies/ruby-2.2.1/bin/ruby
 require 'thor'
 require 't411'
 require 'parseconfig'
@@ -15,7 +15,7 @@ require 'sanitize'
 class Gratt < Thor
   include Yts
   register(Gt411, 't411', 't411 <command>', 'Access T411')
-  register(Gyify, 'yify', 'yify <command>', 'Access YTS')
+  register(Gyify, 'yts', 'yts <command>', 'Access YTS')
 end
 
 Gratt.start(ARGV)

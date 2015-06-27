@@ -35,7 +35,12 @@ module Yts
     new = []
     subs = []
     for i in 0.. arr[0].size
+      begin
       new <<  arr[0][i] if  arr[0][i].to_s.include?(lang)
+      rescue
+        puts 'Is language set in config file?'
+        break
+      end
     end
     new = new.uniq
     new.each {|x| subs << 'http://www.yifysubtitles.com/'+x.to_s.gsub('subtitles','subtitle')+'.zip'}

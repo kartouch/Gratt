@@ -28,8 +28,17 @@ local_path='/tmp'
 
 #subs_lang=french
 subs_path='/tmp'
-#remote server
-#remote_server=")
+
+#remote storage location
+#subs_remote_method=ssh
+#subs_remote_server=
+#subs_remote_path=
+
+#transmission settings
+#transmission_server=
+#transmission_user=
+#transmission_pwd=
+                  ")
       Formatador.display_line("[green]Config file created in #{ENV['HOME']+'/.gratt/gratt.conf'}[/]")
     rescue IOError => e
       puts 'Something happened... Writable?'
