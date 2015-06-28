@@ -1,6 +1,4 @@
 require 'active_record'
-require './lib/database/db'
-require './lib/database/wishlist'
 require 'table_print'
 
 module Gratt2wishes
@@ -12,7 +10,7 @@ module Gratt2wishes
   end
 
   def create(title,season=nil,episode=nil,lang=nil)
-    Wishlist.create(title: title, season: season, episode: episode, lang: lang, downloaded: false)
+    Wishlist.create(title: title, season: season, episode: episode, lang: lang)
   end
 
   def remove(id)

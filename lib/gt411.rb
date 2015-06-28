@@ -8,7 +8,9 @@ require 'formatador'
 require 'sanitize'
 require './lib/database/db'
 require './lib/database/wishlist'
+require './lib/database/torrents'
 require './lib/wishes'
+require './lib/daemon'
 
 
 class Gt411 < Thor
@@ -17,6 +19,7 @@ class Gt411 < Thor
   include Gratt2config
   include Gratt2request
   include Gratt2wishes
+  include Gratt2daemon
 
   Gratt2auth::auth
   $categories = {documentary:634,
@@ -117,14 +120,26 @@ class Gt411 < Thor
           Gratt2wishes.create(title,season,episode,lang)
         elsif options[:multiple_delete]
           Gratt2wishes.remove(start)
+          Gratt2daemon.remove_from_list(start)
         end
         start +=1
       end
     end
-   Gratt2wishes.remove(options[:id]) if options[:delete]
+   Gratt2wishes.remove(options[:id]) && Gratt2daemon.remove_from_list(options[:id]) if options[:delete]
    Gratt2wishes.create(title,season,episode,lang) if options[:add]  
   end
-  
+
+  desc 'daemon', 'Manages the daemon'
+  option :check, aliases: '-c'
+  option :list, aliases: '-l'
+  option :mark, aliases: 'm'
+  option :id
+  def daemon
+    Gratt2daemon.check if options[:check]
+    Gratt2daemon.list_available if options[:list]
+    Gratt2daemon.mark_as_downloaded(options[:id]) if options[:mark]
+  end
+
   private 
   def add_to_remote_server(id)
     if File.exists?("/tmp/#{id}.torrent")
