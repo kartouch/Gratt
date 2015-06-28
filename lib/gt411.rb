@@ -6,6 +6,9 @@ require './lib/request'
 require './lib/config'
 require 'formatador'
 require 'sanitize'
+require './lib/database/db'
+require './lib/database/wishlist'
+require './lib/wishes'
 
 
 class Gt411 < Thor
@@ -13,6 +16,7 @@ class Gt411 < Thor
   include Gratt2auth
   include Gratt2config
   include Gratt2request
+  include Gratt2wishes
 
   Gratt2auth::auth
   $categories = {documentary:634,
@@ -81,6 +85,44 @@ class Gt411 < Thor
   desc 'generate', 'Generate the config file (REQUIRED)'
   def generate
     Gratt2config::generate_config
+  end
+
+  desc 'wishlist', 'Manage the wishlist'
+  option :list, aliases: '-L', banner: 'List'
+  option :delete, aliases: '-D', banner: 'Delete (requires: -id)'
+  option :add, aliases: '-A'
+  option :id, aliases: '-id'
+  option :title, aliases: '-t'
+  option :season, aliases: '-s'
+  option :episode, aliases: '-e'
+  option :lang, aliases: '-l'
+  option :multiple, aliases: '-M'
+  option :multiple_add, aliases: '-a'
+  option :multiple_delete, aliases: '-d'
+  option :start
+  option :end
+  def wishlist(*p)
+    title = options[:title] if options[:title]
+    season = options[:season] if options[:season]
+    episode = options[:episode] if options[:episode]
+    lang = options[:lang] if options[:lang]
+    Gratt2wishes.list if options[:list]
+    if options[:multiple]
+      start = options[:start].to_i
+      finish = options[:end].to_i
+      while start <= finish do
+        if options[:multiple_add]
+          episode = start.to_s.gsub(start.to_s,"0#{start.to_s}")
+          episode = episode[1..-1] if episode.size > 2
+          Gratt2wishes.create(title,season,episode,lang)
+        elsif options[:multiple_delete]
+          Gratt2wishes.remove(start)
+        end
+        start +=1
+      end
+    end
+   Gratt2wishes.remove(options[:id]) if options[:delete]
+   Gratt2wishes.create(title,season,episode,lang) if options[:add]  
   end
   
   private 
