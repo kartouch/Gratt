@@ -8,7 +8,7 @@ require 'formatador'
 require 'sanitize'
 require './lib/database/db'
 require './lib/database/wishlist'
-require './lib/database/torrents'
+require './lib/database/torrent'
 require './lib/wishes'
 require './lib/daemon'
 
@@ -44,14 +44,14 @@ class Gt411 < Thor
   option :date, aliases: '-d', type: :string
   option :from, aliases: '-f', type: :string
   option :till, aliases: '-t', type: :string
-
+  option :id
   def search(title,limit=Gratt2config::from_file['search_limit'],cid=nil)
     cid = $categories[options[:category].to_sym] if options[:category]
     limit = options[:limit] if options[:limit]
     date = options[:date] if options[:date]
     from = options[:from] if options[:from]
     till = options[:till] if options[:till]
-    Formatador.display_table( Gratt2request::t411_search(title,limit,cid,date,from,till),[:id,:name,:size,:added])
+    Formatador.display_table(Gratt2request::t411_search(title,limit,cid,date,from,till),[:id,:name,:size,:added])
   end
 
   desc 'download ID', 'download a specific ID'
@@ -69,7 +69,7 @@ class Gt411 < Thor
       path = options[:path]
     end
     begin
-      Gt411::Torrents.download(id,path)
+      T411::Torrents.download(id,path)
     rescue
       puts 'ID not found !!'
     end
@@ -79,7 +79,7 @@ class Gt411 < Thor
   desc 'details ID', 'details of an ID'
   def details(id)
     begin
-      puts  Sanitize.clean(JSON.parse(Gt411::Torrents.details(id))['description']).gsub('  ',"\n")
+      puts  Sanitize.clean(JSON.parse(T411::Torrents.details(id))['description']).gsub('  ',"\n")
     rescue
       puts 'ID Not found'
     end
@@ -138,9 +138,14 @@ class Gt411 < Thor
     Gratt2daemon.check if options[:check]
     Gratt2daemon.list_available if options[:list]
     Gratt2daemon.mark_as_downloaded(options[:id]) if options[:mark]
+   if options[:id]                                                                                                                    
+      i = Wishlist.find(options[:id])                                                                                                      
+     Formatador.display_table(Gratt2request::t411_search("#{i.title}.S#{i.season}E#{i.episode}.#{i.lang}",limit=Gratt2config::from_file['search_limit'],cid=nil,nil,nil,nil),[:id,:name,:size,:added])
+   end                        
   end
 
-  private 
+
+   private 
   def add_to_remote_server(id)
     if File.exists?("/tmp/#{id}.torrent")
       `transmission-remote #{Gratt2config::from_file['transmission_server']} \
@@ -150,6 +155,4 @@ class Gt411 < Thor
       puts 'File not found'
     end
   end
-
-
 end

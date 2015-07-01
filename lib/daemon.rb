@@ -22,18 +22,18 @@ module Gratt2daemon
   end
   
   def push_to_list(wishlist_id)
-    Torrents.create(wishlist_id: wishlist_id, available: true, downloaded: false)
+    Torrent.create(wishlist_id: wishlist_id, available: true, downloaded: false)
   end
 
   def remove_from_list(wishlist_id)
     begin
-    Torrents.where(wishlist_id: wishlist_id).first.destroy
+    Torrent.where(wishlist_id: wishlist_id).first.destroy
     rescue
     end
   end
 
   def mark_as_downloaded(wishlist_id)
-    torrent = Torrents.where(wishlist_id: wishlist_id).first
+    torrent = Torrent.where(wishlist_id: wishlist_id).first
     torrent.downloaded = true
     torrent.save
   end
