@@ -60,20 +60,25 @@ class Gt411 < Thor
       When not set, it will download in the folder of the application \n
       The value to set is in config file is : local_path='/your/path' \n
       This value can be overridden with -p parameter.
+      Use --id to remove the ID from the wishlist.
   LONGDESC
   option :path, aliases: '-p'
-  def download(id)
+  option :id
+  def download(*p)
     if options[:path].nil?
       path = Gratt2config::from_file['local_path']
     else
       path = options[:path]
     end
+    p.each do |id|
     begin
       T411::Torrents.download(id,path)
     rescue
       puts 'ID not found !!'
     end
    add_to_remote_server(id)
+   end
+   remove_from_daemon if options[:id]
   end
 
   desc 'details ID', 'details of an ID'
@@ -125,7 +130,7 @@ class Gt411 < Thor
         start +=1
       end
     end
-   Gratt2wishes.remove(options[:id]) && Gratt2daemon.remove_from_list(options[:id]) if options[:delete]
+   remove_from_daemon if options[:delete]
    Gratt2wishes.create(title,season,episode,lang) if options[:add]  
   end
 
@@ -154,5 +159,9 @@ class Gt411 < Thor
     else
       puts 'File not found'
     end
+  end
+
+  def remove_from_daemon
+   Gratt2wishes.remove(options[:id]) && Gratt2daemon.remove_from_list(options[:id])
   end
 end
