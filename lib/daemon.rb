@@ -4,7 +4,11 @@ require 't411'
 
 module Gratt2daemon
   extend self
+  begin
   Gratt2auth.auth
+  rescue
+#    raise 'T411 is not availabe'
+  end
   Gratt2db.connect
   
   def check

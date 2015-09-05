@@ -1,4 +1,5 @@
 #!/home/kartouch/.rvm/rubies/ruby-2.2.1/bin/ruby
+$LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'thor'
 require 't411'
 require 'parseconfig'

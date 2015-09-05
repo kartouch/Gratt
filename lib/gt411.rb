@@ -20,7 +20,8 @@ class Gt411 < Thor
   include Gratt2request
   include Gratt2wishes
   include Gratt2daemon
-
+  
+  
   Gratt2auth::auth
   $categories = {documentary:634,
                  movie:631,
